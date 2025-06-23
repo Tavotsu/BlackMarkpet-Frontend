@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - BlackMarkpet</title>
+    <link rel="stylesheet" href="src/output.css">
+    <link rel="icon" href="assets/img/icon.png" type="image/png" sizes="32x32">
+</head>
+<body class="bg-neutral-900 p-0 m-0 ">
+    <!-- Navbar -->
+
+    <nav class="py-3 bg-neutral-900">
+        <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
+            <!-- Logo y nombre -->
+            <div class="flex items-center space-x-2 right-full">
+                <a href="index.html">
+                    <img src="assets/img/icon.png" alt="Logo" class=" ml-0 items-start h-20"> 
+                </a>
+                <span class="text-white text-2xl font-semibold">BlackMarkpet</span>
+            </div>
+            
+            <!-- Menú escritorio -->
+            <div class="hidden md:flex space-x-6 ">
+                <ul class="hidden md:flex items-center space-x-10 text-blue-deep dark:text-white font-bold text-sm">
+                    <li class="tracking-wide"><a href="index.html" class="hover:text-orange-standard">Inicio</a></li>
+                    <li class="tracking-wide"><a href="detalles.html" class="hover:text-orange-standard">Catalogo</a></li>
+                    <li class="tracking-wide"><a href="formulario.html" class="hover:text-orange-standard">Contacto</a></li>
+                </ul>
+            </div>
+
+            <!-- Botón burger menú para celulares -->
+            <button id="menuButton" class="md:hidden flex items-center px-3 py-2 border rounded text-white border-gray-400 hover:text-orange-standard hover:border-orange-standard focus:outline-none" aria-label="Abrir menú">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menu para celular -->
+        <div id="mobileMenu" class="hidden md:hidden bg-neutral-800 p-4 space-y-4">
+            <a href="index.html" class="block text-white hover:text-gray-400">Inicio</a>
+            <a href="detalles.html" class="block text-white hover:text-gray-400">Catalogo</a>
+            <a href="formulario.html" class="block text-white hover:text-gray-400">Contacto</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="bg-center bg-no-repeat bg-cover relative" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('assets/img/Dogs_Black_background_Spaniel_539102_3840x2160.jpg'); height: 50vh;">
+        <div class="text-center text-white text-4xl absolute" style="top:50%; left: 50%; transform: translate(-50%, -50%);">
+            <h1 class="font-bold">Bienvenido a BlackMarkpet</h1>
+            <p class="text-2xl">Tu tienda de mascotas en línea.</p>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <main class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-stone-900 dark:text-white mb-8 text-center">Nuestros Productos</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <a href="#" class="group block bg-neutral-200 dark:bg-neutral-700 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                <div class="relative">
+                    <img src="https://cdn.shopify.com/s/files/1/0102/3742/files/Ganador_936ee4de-362b-4b41-894f-0fbad4ba9e04.jpg?v=1611158640" alt="Comida Premium" class="w-full h-56 object-cover">
+                </div>
+                <div class="dark:bg-neutral-800 p-5">
+                    <h3 class="text-xl font-bold text-stone-900 dark:text-white mb-2">Comida Premium</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">La mejor nutrición para tu fiel amigo.</p>
+                </div>
+            </a>
+
+            <a href="#" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                <div class="relative">
+                    <img src="https://st3.depositphotos.com/1593759/37151/i/450/depositphotos_371514964-stock-photo-pet-accessories-concept-dry-food.jpg" alt="Accesorios" class="w-full h-56 object-cover">
+                </div>
+                <div class="dark:bg-neutral-800 p-5">
+                    <h3 class="text-xl font-bold text-stone-900 dark:text-white mb-2">Accesorios</h3>
+                    <p class="text-gray-600 dark:text-gray-300  text-sm">Todo lo que necesitas para el día a día.</p>
+                </div>
+            </a>
+
+            <a href="#" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                <div class="relative">
+                    <img src="https://acdn-us.mitiendanube.com/stores/880/994/products/mb-higiene-16-66c6c089cdaecefa6817006689517501-1024-1024.jpg" alt="Higiene y Cuidado" class="w-full h-56 object-cover">
+                </div>
+                <div class="dark:bg-neutral-800 p-5">
+                    <h3 class="text-xl font-bold text-stone-900 dark:text-white mb-2">Higiene y Cuidado</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Mantén a tu mascota limpia y saludable.</p>
+                </div>
+            </a>
+
+            <a href="#" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                <div class="relative">
+                    <img src="https://www.lospatiperrosconcepcion.cl/wp-content/uploads/2022/03/camas-tres-para-gatos-cafe-erde-naranja.png" alt="Camas" class="w-full h-56 object-cover">
+                </div>
+                <div class="dark:bg-neutral-800 p-5">
+                    <h3 class="text-xl font-bold text-stone-900 dark:text-white mb-2">Camas y Descanso</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">El confort que tu mascota merece.</p>
+                </div>
+            </a>
+
+            <a href="#" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                <div class="relative">
+                    <img src="https://cdnx.jumpseller.com/crusec/image/50017730/resize/610/610?1719069285" alt="Juguetes" class="w-full h-56 object-cover">
+                </div>
+                <div class="dark:bg-neutral-800 p-5">
+                    <h3 class="text-xl font-bold text-stone-900 dark:text-white mb-2">Juguetes</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Diversión garantizada por horas.</p>
+                </div>
+            </a>
+
+            <a href="#" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                <div class="relative">
+                    <img src="https://nupec.com/wp-content/uploads/2022/06/vet-consulting-2021-09-24-03-26-34-utc.jpg" alt="Asesoramiento Veterinario" class="w-full h-56 object-cover">
+                </div>
+                <div class="dark:bg-neutral-800 p-5">
+                    <h3 class="text-xl font-bold text-stone-900 dark:text-white mb-2">Asesoramiento Veterinario</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Expertos a tu disposición para cualquier consulta.</p>
+                </div>
+            </a>
+
+        </div>
+    </main>
+    <footer>
+        <div class="bg-neutral-800 text-white py-6">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                <p class="text-sm">© 2025 BlackMarkpet. Todos los derechos reservados.</p>
+                <p class="text-sm">Desarrollado por Gustavo Santana</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="src/js/modeswitch.js"></script>
+    <script src="src/js/Responsive_menu.js" defer></script>
+
+</body>
+</html>
