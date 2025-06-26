@@ -47,9 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Muestra un indicador de carga
         catalogoContainer.innerHTML = '<p class="text-white col-span-full text-center text-2xl animate-pulse">Cargando productos...</p>';
 
-        // IMPORTANTE: Supone que tu tabla se llama "productos"
         const { data, error } = await supabase
-            .from('productos') // <-- Si tu tabla tiene otro nombre, cámbialo aquí
+            .from('productos') 
             .select('*');
 
         if (error) {
