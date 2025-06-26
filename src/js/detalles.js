@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // Buscar el producto por ID
+    // Buscar el producto por ID    
     // se usa .single() para asegurarnos que devuelva un solo objeto y no un array
     const { data: producto, error } = await supabase
         .from('productos')

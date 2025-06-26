@@ -53,8 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
         navLinksContainer.innerHTML = menuPublico;
         mobileMenuContainer.innerHTML = menuMovilPublico;
     }
-
-    // --- MANEJO DE EVENTOS ---
     
     // Logout
     const logout = () => {

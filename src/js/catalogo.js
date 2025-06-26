@@ -1,94 +1,36 @@
-// src/js/catalogo.js
+const SUPABASE_URL = 'https://jscpecyyajfcqsmmovku.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzY3BlY3l5YWpmY3FzbW1vdmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2NDgxNjUsImV4cCI6MjA2NjIyNDE2NX0.iMK7-TRZmQCokoLUtz-eQwFzVFVOSzqP5TA_sfsQNzQ';
+
+// 2. Crea el cliente de Supabase
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 document.addEventListener('DOMContentLoaded', () => {
     const catalogoContainer = document.getElementById('catalogo-productos');
 
-    // Datos de ejemplo. Más adelante, esto vendrá de tu API de Spring Boot.
-    const productosDeEjemplo = [
-        {
-            id: 1,
-            nombre: 'Alimento Premium para Perros Adultos',
-            precio: 25990,
-            descripcion: 'Croquetas balanceadas con pollo y arroz para una nutrición completa.',
-            imagen: 'assets/img/productos/dog-food-1.png' // Asegúrate de tener esta imagen o un placeholder
-        },
-        {
-            id: 2,
-            nombre: 'Arena Sanitaria para Gatos',
-            precio: 12500,
-            descripcion: 'Arena aglomerante de alta absorción con control de olores.',
-            imagen: 'assets/img/productos/cat-litter-1.png'
-        },
-        {
-            id: 3,
-            nombre: 'Juguete Interactivo para Perros',
-            precio: 8990,
-            descripcion: 'Dispensador de premios que estimula la mente de tu mascota.',
-            imagen: 'assets/img/productos/dog-toy-1.png'
-        },
-        {
-            id: 4,
-            nombre: 'Rascador para Gatos con Plataforma',
-            precio: 19990,
-            descripcion: 'Poste de sisal resistente para el cuidado de las uñas de tu gato.',
-            imagen: 'assets/img/productos/cat-scratcher-1.png'
-        },
-        {
-            id: 5,
-            nombre: 'Snacks Dentales para Perro',
-            precio: 6500,
-            descripcion: 'Deliciosos snacks que ayudan a mantener la higiene bucal.',
-            imagen: 'assets/img/productos/dog-treats-1.png'
-        },
-        {
-            id: 6,
-            nombre: 'Comida Húmeda para Gatos (Salmón)',
-            precio: 1500,
-            descripcion: 'Paté suave y delicioso, ideal como complemento a la dieta.',
-            imagen: 'assets/img/productos/cat-wet-food-1.png'
-        },
-        {
-            id: 7,
-            nombre: 'Collar Reflectante para Perros',
-            precio: 7990,
-            descripcion: 'Collar de nylon ajustable con bandas reflectantes para paseos nocturnos.',
-            imagen: 'assets/img/productos/dog-collar-1.png'
-        },
-        {
-            id: 8,
-            nombre: 'Cama Acolchada para Mascotas',
-            precio: 15990,
-            descripcion: 'Cama suave y confortable para un descanso óptimo. Lavable a máquina.',
-            imagen: 'assets/img/productos/pet-bed-1.png'
-        }
-    ];
-
-    // Función para renderizar los productos
+    // Función para renderizar los productos en el HTML
     function renderizarProductos(productos) {
-        // Limpiamos el contenedor por si acaso
-        catalogoContainer.innerHTML = '';
+        catalogoContainer.innerHTML = ''; // Limpia el contenedor de productos
 
-        if (productos.length === 0) {
-            catalogoContainer.innerHTML = '<p class="text-white col-span-full text-center">No se encontraron productos.</p>';
+        if (!productos || productos.length === 0) {
+            catalogoContainer.innerHTML = '<p class="text-white col-span-full text-center text-xl">No se encontraron productos en la base de datos.</p>';
             return;
         }
 
         productos.forEach(producto => {
             const cardProducto = document.createElement('div');
-            cardProducto.className = 'bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300';
+            cardProducto.className = 'bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 flex flex-col';
             
-            // Formatear el precio a moneda chilena
             const precioFormateado = new Intl.NumberFormat('es-CL', {
                 style: 'currency',
                 currency: 'CLP'
             }).format(producto.precio);
 
             cardProducto.innerHTML = `
-                <img class="w-full h-48 object-cover" src="${producto.imagen}" alt="${producto.nombre}">
-                <div class="p-4">
+                <img class="w-full h-48 object-cover" src="${producto.imagen || 'assets/img/placeholder.png'}" alt="Imagen de ${producto.nombre}">
+                <div class="p-4 flex flex-col flex-grow">
                     <h3 class="text-xl font-bold text-white mb-2 truncate">${producto.nombre}</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-10 overflow-hidden">${producto.descripcion}</p>
-                    <div class="flex items-center justify-between">
+                    <p class="text-gray-400 text-sm mb-4 flex-grow">${producto.descripcion}</p>
+                    <div class="flex items-center justify-between mt-auto">
                         <span class="text-2xl font-bold text-orange-500">${precioFormateado}</span>
                         <a href="detalles.html?id=${producto.id}" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded transition-colors">
                             Ver más
@@ -100,8 +42,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Llamamos a la función para que se ejecute al cargar la página
+    // Función para obtener los productos desde Supabase
+    async function cargarProductos() {
+        // Muestra un indicador de carga
+        catalogoContainer.innerHTML = '<p class="text-white col-span-full text-center text-2xl animate-pulse">Cargando productos...</p>';
+
+        // IMPORTANTE: Supone que tu tabla se llama "productos"
+        const { data, error } = await supabase
+            .from('productos') // <-- Si tu tabla tiene otro nombre, cámbialo aquí
+            .select('*');
+
+        if (error) {
+            console.error('Error al cargar productos:', error);
+            catalogoContainer.innerHTML = `<p class="text-red-500 col-span-full text-center">Error al cargar productos. Revisa la consola para más detalles.</p>`;
+            return;
+        }
+
+        // Llama a la función para pintar los productos en la página
+        renderizarProductos(data);
+    }
+
+    // Llama a la función principal al cargar la página
     if (catalogoContainer) {
-       renderizarProductos(productosDeEjemplo);
+       cargarProductos();
     }
 });
