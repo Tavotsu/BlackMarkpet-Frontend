@@ -1,87 +1,71 @@
+const SUPABASE_URL = 'https://jscpecyyajfcqsmmovku.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzY3BlY3l5YWpmY3FzbW1vdmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2NDgxNjUsImV4cCI6MjA2NjIyNDE2NX0.iMK7-TRZmQCokoLUtz-eQwFzVFVOSzqP5TA_sfsQNzQ';
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Array de objetos. Ahora cada objeto representa un producto de la tienda.
-    const productosBlackMarkpet = [
-        {
-            id: 'prod-001',
-            nombre: 'Alimento Premium para Perro Adulto',
-            descripcion: 'Croquetas balanceadas con 30% de proteína y vitaminas esenciales para una vida saludable.',
-            imagenUrl: 'https://cdnx.jumpseller.com/tu-mascota-y-algo-mas/image/43530555/premium_vitalcan-cordero-600x896-1__2_.jpg?1720122934', 
-            precio: 29990, 
-            categoria: 'Alimentos'
-        },
-        {
-            id: 'prod-002',
-            nombre: 'Juguete Interactivo para Gatos',
-            descripcion: 'Juguete dispensador de premios que estimula la mente y el instinto de caza de tu felino.',
-            imagenUrl: 'https://m.media-amazon.com/images/I/81JiN5D-XZL._AC_UF1000,1000_QL80_.jpg', 
-            precio: 12500,
-            categoria: 'Juguetes'
-        },
-        {
-            id: 'prod-003',
-            nombre: 'Cama Acolchada Antiestrés',
-            descripcion: 'Cama extra suave y cómoda, diseñada para reducir la ansiedad y mejorar el descanso de tu mascota.',
-            imagenUrl: 'https://arenaparamascotas.cl/wp-content/uploads/2023/12/cama-antiestres-para-gato.jpeg', 
-            precio: 19990,
-            categoria: 'Accesorios'
-        },
-        {
-            id: 'prod-004',
-            nombre: 'Arena Sanitaria Aglomerante',
-            descripcion: 'Arena de alta calidad con control de olores y gran poder de absorción. Fácil de limpiar.',
-            imagenUrl: 'https://www.worldpet.cl/wp-content/uploads/2020/12/Arena-FIT-baby-10k.png', 
-            precio: 8990,
-            categoria: 'Higiene'
-        }
-    ];
-
-    // 
-    renderizarProductos(productosBlackMarkpet);
-});
-
-
-//Función para dar formato de moneda Chilena (CLP) a un número.
-function formatCurrency(numero) {
-    return new Intl.NumberFormat('es-CL', {
+function renderizarDetalleProducto(producto) {
+    // Elementos del DOM
+    const nombreEl = document.getElementById('detalle-nombre');
+    const descripcionEl = document.getElementById('detalle-descripcion');
+    const precioEl = document.getElementById('detalle-precio');
+    const imagenEl = document.getElementById('detalle-imagen');
+    const imagenContainerEl = document.getElementById('detalle-imagen-container');
+    const botonComprar = document.querySelector('#detalle-producto-container button');
+    
+    // Actualizar el contenido
+    nombreEl.textContent = producto.nombre;
+    descripcionEl.textContent = producto.descripcion;
+    
+    // Dar formato al precio
+    precioEl.textContent = new Intl.NumberFormat('es-CL', {
         style: 'currency',
         currency: 'CLP'
-    }).format(numero);
+    }).format(producto.precio);
+
+    // Actualizar imagen y quitar efecto de carga
+    imagenEl.src = producto.imagen || 'assets/img/placeholder.png';
+    imagenEl.alt = `Imagen de ${producto.nombre}`;
+    imagenEl.classList.remove('hidden');
+    imagenContainerEl.classList.remove('animate-pulse', 'bg-neutral-700');
+
+    // Boton Añadir al Carrito
+    botonComprar.disabled = false;
+    botonComprar.textContent = "Añadir al Carrito";
+    
+    // Actualizar el titulo de la página
+    document.title = `${producto.nombre} - BlackMarkpet`;
 }
 
+document.addEventListener('DOMContentLoaded', async () => {
+    // Obtener el ID del producto de la URL
+    const params = new URLSearchParams(window.location.search);
+    const productoId = params.get('id');
 
-function renderizarProductos(productos) {
-    //Nuevo ID de nuestro contenedor de productos
-    const contenedorProductos = document.getElementById('productos-grid');
+    if (!productoId) {
+        // Si no hay ID, mostrar error
+        swal("Error", "No se ha especificado un producto.", "error")
+            .then(() => {
+                window.location.href = 'index.html';
+            });
+        return;
+    }
 
-    if (!contenedorProductos) return; 
-    contenedorProductos.innerHTML = ''; 
+    // Buscar el producto por ID
+    // se usa .single() para asegurarnos que devuelva un solo objeto y no un array
+    const { data: producto, error } = await supabase
+        .from('productos')
+        .select('*')
+        .eq('id', productoId)
+        .single();
 
-    // Crear tarjetas para cada producto
-    productos.forEach(producto => {
-        // FormatCurrency para mostrar el precio
-        const precioFormateado = formatCurrency(producto.precio);
+    if (error || !producto) {
+        console.error('Error al cargar el producto:', error);
+        swal("Producto no encontrado", "El producto que buscas no existe o fue eliminado.", "error")
+            .then(() => {
+                window.location.href = 'index.html';
+            });
+        return;
+    }
 
-        const tarjetaHtml = `
-            <div class="bg-zinc-100 dark:bg-zinc-600 rounded-lg shadow-lg overflow-hidden flex flex-col">
-                <img class="w-full h-56 object-cover" src="${producto.imagenUrl}" alt="Imagen de ${producto.nombre}">
-                
-                <div class="p-6 flex flex-col flex-grow">
-                    <h3 class="text-xl font-bold text-blue-deep dark:text-white mb-2">${producto.nombre}</h3>
-                    <p class="text-zinc-600 dark:text-zinc-300 mb-4 flex-grow">${producto.descripcion}</p>
-                    
-                    <div class="mt-auto">
-                        <p class="text-2xl font-semibold text-white text-center mb-4">${precioFormateado}</p>
-                        <button 
-                            onclick="alert('Agregado al carrito: ${producto.nombre}')" 
-                            class="w-full text-white bg-blue-deep hover:bg-zinc-800 dark:bg-orange-standard dark:hover:bg-orange-dark font-bold py-2 px-4 rounded transition-colors duration-300">
-                            Añadir al Carrito
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        contenedorProductos.innerHTML += tarjetaHtml;
-    });
-}
+    // Si todo sale bien, llamar a la función para mostrar los datos
+    renderizarDetalleProducto(producto);
+});

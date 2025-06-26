@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - BlackMarkpet</title>
+    <title>Registro - BlackMarkpet</title>
     <link rel="stylesheet" href="src/output.css">
     <link rel="icon" href="assets/img/icon.png" type="image/png" sizes="32x32">
 </head>
-<body class="bg-neutral-900 flex flex-col min-h-screen" style="background-image: url(https://cusicphoto.com/wp-content/uploads/2024/02/Chicago-dog-portrait-studio-CusicPhoto-Roshni-1.jpg); background-position: top; background-size: cover; background-repeat: no-repeat;">
-    
+<body class="bg-neutral-900 flex flex-col min-h-screen " style="background-image: url(https://cusicphoto.com/wp-content/uploads/2024/02/Chicago-dog-portrait-studio-CusicPhoto-Roshni-1.jpg); background-position: top; background-size: cover; background-repeat: no-repeat;">
     <nav class="py-3 bg-neutral-900">
         <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
             <div class="flex items-center space-x-2 right-full">
@@ -18,8 +17,8 @@
                 <span class="text-white text-2xl font-semibold">BlackMarkpet</span>
             </div>
             <div id="nav-links" class="hidden md:flex items-center space-x-6">
-                </div>
-            <button id="menuButton" class="md:hidden flex items-center px-3 py-2 border rounded text-white border-gray-400 hover:text-orange-standard hover:border-orange-standard focus:outline-none" aria-label="Abrir menú">
+                 </div>
+            <button id="menuButton" class="md:hidden flex items-center px-3 py-2 border rounded text-white border-white hover:text-orange-standard hover:border-orange-standard focus:outline-none" aria-label="Abrir menú">
                 <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
@@ -29,11 +28,15 @@
              </div>
     </nav>
 
-    <main class="flex-grow flex items-center justify-center max-w-7xl mx-auto px-4  sm:px-6 lg:px-8">
-        <div class="max-w-md w-full">
+    <main class="flex-grow flex items-center justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-md">
             <div class="bg-neutral-800 shadow-lg rounded-lg p-8">
-                <h2 class="text-3xl f</div>ont-bold text-white mb-6 text-center">Iniciar Sesión</h2>
-                <form id="login-form">
+                <h2 class="text-3xl font-bold text-white mb-6 text-center">Crear una Cuenta</h2>
+                <form id="registro-form">
+                    <div class="mb-4">
+                        <label for="nombre" class="block text-white text-sm font-bold mb-2">Nombre Completo</label>
+                        <input type="text" id="nombre" name="nombre" class="shadow appearance-none border rounded w-full py-2 px-3 bg-neutral-700 border-neutral-600 text-white leading-tight focus:outline-none focus:shadow-outline" required>
+                    </div>
                     <div class="mb-4">
                         <label for="email" class="block text-white text-sm font-bold mb-2">Correo Electrónico</label>
                         <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 bg-neutral-700 border-neutral-600 text-white leading-tight focus:outline-none focus:shadow-outline" required>
@@ -43,12 +46,12 @@
                         <input type="password" id="password" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 bg-neutral-700 border-neutral-600 text-white leading-tight focus:outline-none focus:shadow-outline" required>
                     </div>
                     <div class="flex items-center justify-between">
-                        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
-                            Entrar
+                        <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+                            Registrarse
                         </button>
                     </div>
-                    <p class="text-center text-white text-sm mt-6">
-                        ¿No tienes una cuenta? <a href="registro.html" class="font-bold text-white hover:text-gray-400">Regístrate aquí</a>
+                    <p class="text-center text-white  text-sm mt-6">
+                        ¿Ya tienes una cuenta? <a href="login.html" class="font-bold text-white hover:text-gray-400">Inicia sesión</a>
                     </p>
                 </form>
             </div>
@@ -63,11 +66,9 @@
             </div>
         </div>
     </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="src/js/catalogo.js"></script> 
-    <script src="src/js/meow.js"></script> <script src="src/js/sesion.js"></script>
-    <script src="src/js/Responsive_menu.js" defer></script>
+    <script src="src/js/sesion.js"></script>
+    <script src="src/js/Responsive_menu.js"></script>
 </body>
 </html>

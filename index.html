@@ -10,26 +10,18 @@
 <body class="bg-neutral-900 p-0 m-0 ">
     <!-- Navbar -->
 
-    <nav class="py-3 bg-neutral-900">
+   <nav class="py-3 bg-neutral-900">
         <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
-            <!-- Logo y nombre -->
             <div class="flex items-center space-x-2 right-full">
                 <a href="index.html">
                     <img src="assets/img/icon.png" alt="Logo" class=" ml-0 items-start h-20"> 
                 </a>
                 <span class="text-white text-2xl font-semibold">BlackMarkpet</span>
             </div>
-            
-            <!-- Menú escritorio -->
-            <div class="hidden md:flex space-x-6 ">
-                <ul class="hidden md:flex items-center space-x-10 text-blue-deep dark:text-white font-bold text-sm">
-                    <li class="tracking-wide"><a href="index.html" class="hover:text-orange-standard">Inicio</a></li>
-                    <li class="tracking-wide"><a href="detalles.html" class="hover:text-orange-standard">Catalogo</a></li>
-                    <li class="tracking-wide"><a href="formulario.html" class="hover:text-orange-standard">Contacto</a></li>
-                </ul>
-            </div>
 
-            <!-- Botón burger menú para celulares -->
+            <div id="nav-links" class="hidden md:flex items-center space-x-6">
+                </div>
+
             <button id="menuButton" class="md:hidden flex items-center px-3 py-2 border rounded text-white border-gray-400 hover:text-orange-standard hover:border-orange-standard focus:outline-none" aria-label="Abrir menú">
                 <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -37,12 +29,7 @@
             </button>
         </div>
 
-        <!-- Menu para celular -->
-        <div id="mobileMenu" class="hidden md:hidden bg-neutral-800 p-4 space-y-4">
-            <a href="index.html" class="block text-white hover:text-gray-400">Inicio</a>
-            <a href="detalles.html" class="block text-white hover:text-gray-400">Catalogo</a>
-            <a href="formulario.html" class="block text-white hover:text-gray-400">Contacto</a>
-        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-neutral-800 p-4 space-y-4"></div>
     </nav>
 
     <!-- Hero -->
@@ -58,7 +45,7 @@
         <h2 class="text-3xl font-bold text-stone-900 dark:text-white mb-8 text-center">Nuestros Productos</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            <a href="#" class="group block bg-neutral-200 dark:bg-neutral-700 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+            <a href="detalles.html" class="group block bg-neutral-200 dark:bg-neutral-700 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
                 <div class="relative">
                     <img src="https://cdn.shopify.com/s/files/1/0102/3742/files/Ganador_936ee4de-362b-4b41-894f-0fbad4ba9e04.jpg?v=1611158640" alt="Comida Premium" class="w-full h-56 object-cover">
                 </div>
@@ -68,7 +55,7 @@
                 </div>
             </a>
 
-            <a href="#" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+            <a href="detalles.html" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
                 <div class="relative">
                     <img src="https://st3.depositphotos.com/1593759/37151/i/450/depositphotos_371514964-stock-photo-pet-accessories-concept-dry-food.jpg" alt="Accesorios" class="w-full h-56 object-cover">
                 </div>
@@ -78,7 +65,7 @@
                 </div>
             </a>
 
-            <a href="#" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+            <a href="detalles.html" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
                 <div class="relative">
                     <img src="https://acdn-us.mitiendanube.com/stores/880/994/products/mb-higiene-16-66c6c089cdaecefa6817006689517501-1024-1024.jpg" alt="Higiene y Cuidado" class="w-full h-56 object-cover">
                 </div>
@@ -88,7 +75,7 @@
                 </div>
             </a>
 
-            <a href="#" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+            <a href="detalles.html" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
                 <div class="relative">
                     <img src="https://www.lospatiperrosconcepcion.cl/wp-content/uploads/2022/03/camas-tres-para-gatos-cafe-erde-naranja.png" alt="Camas" class="w-full h-56 object-cover">
                 </div>
@@ -98,7 +85,7 @@
                 </div>
             </a>
 
-            <a href="#" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+            <a href="detalles.html" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
                 <div class="relative">
                     <img src="https://cdnx.jumpseller.com/crusec/image/50017730/resize/610/610?1719069285" alt="Juguetes" class="w-full h-56 object-cover">
                 </div>
@@ -108,7 +95,7 @@
                 </div>
             </a>
 
-            <a href="#" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+            <a href="detalles.html" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
                 <div class="relative">
                     <img src="https://nupec.com/wp-content/uploads/2022/06/vet-consulting-2021-09-24-03-26-34-utc.jpg" alt="Asesoramiento Veterinario" class="w-full h-56 object-cover">
                 </div>
@@ -120,6 +107,25 @@
 
         </div>
     </main>
+
+    <section id="dato-curioso-section" class="py-12 bg-neutral-900">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Dato Curioso Felino</h2>
+            <p class="text-white font-bold mb-8">Descubre algo nuevo sobre nuestros amigos los gatos. ¡Presiona el botón para obtener otro dato!</p>
+            
+            <div class="bg-neutral-800 rounded-lg p-6 shadow-lg min-h-[120px] flex items-center justify-center mb-8">
+                <!-- Aqui se muestra el dato curioso -->
+                <blockquote class="justify-center text-white italic text-l md:text-2xl">
+                    <p id="dato-gato">Cargando un dato curioso...</p>
+                </blockquote>
+            </div>
+
+            <button id="otro-dato-btn" class="mt-8 bg-white hover:bg-gray-500 text-black font-bold py-2 px-6 rounded-lg transition-colors duration-300">
+                Obtener otro dato
+            </button>
+        </div>
+    </section>
+
     <footer>
         <div class="bg-neutral-800 text-white py-6">
             <div class="max-w-7xl mx-auto px-4 text-center">
@@ -129,8 +135,8 @@
         </div>
     </footer>
     
-    <script src="src/js/modeswitch.js"></script>
-    <script src="src/js/Responsive_menu.js" defer></script>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="src/js/sesion.js"></script>
+    <script src="src/js/meow.js"></script>
 </body>
 </html>
