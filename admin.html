@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Administración - BlackMarkpet</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-neutral-900 font-sans text-white">
+    <!-- Navbar -->
+    <nav class="bg-black text-white px-6 py-4 flex items-center justify-between shadow-md">
+        <div class="flex items-center space-x-3">
+            <img src="assets/img/icon.png" alt="Logo" class="h-10 w-10 object-contain" />
+            <span class="text-xl font-semibold">BlackMarkpet Admin</span>
+        </div>
+        <div class="space-x-4">
+            <a href="#" class="bg-neutral-700 hover:bg-neutral-600 px-4 py-2 rounded-md text-sm font-medium">Inicio</a>
+            <button id="logoutBtn" class="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-md text-sm font-medium">Cerrar Sesión</button>
+        </div>
+    </nav>
+
+    <!-- Encabezado -->
+    <header class="bg-neutral-800 text-white text-center py-6 shadow-lg">
+        <h1 class="text-2xl font-bold">Panel de Administración</h1>
+        <p class="text-sm">Estadísticas en tiempo real</p>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="p-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
+        <!-- Ventas por hora -->
+        <div class="bg-neutral-800 rounded-2xl shadow-lg p-4">
+            <h3 class="text-lg font-semibold text-center mb-4">Ventas del Día</h3>
+            <div class="chart-container">
+                <canvas id="ventasDia"></canvas>
+            </div>
+        </div>
+
+        <!-- Inventario por categoría -->
+        <div class="bg-neutral-800 rounded-2xl shadow-lg p-4">
+            <h3 class="text-lg font-semibold text-center mb-4">Inventario por Categoría</h3>
+            <div class="chart-container">
+                <canvas id="inventarioCategoria"></canvas>
+            </div>
+        </div>
+
+        <!-- Top productos -->
+        <div class="bg-neutral-800 rounded-2xl shadow-lg p-4">
+            <h3 class="text-lg font-semibold text-center mb-4">Top 5 Productos Más Vendidos</h3>
+            <div class="chart-container">
+                <canvas id="topProductos"></canvas>
+            </div>
+        </div>
+
+        <!-- Stock de productos -->
+        <div class="bg-neutral-800 rounded-2xl shadow-lg p-4">
+            <h3 class="text-lg font-semibold text-center mb-4">Stock de Productos</h3>
+            <div class="chart-container">
+                <canvas id="stockProductos"></canvas>
+            </div>
+        </div>
+    </main>
+
+    <!-- JS externo -->
+    <script src="src/js/admin.js"></script>
+</body>
+</html>
