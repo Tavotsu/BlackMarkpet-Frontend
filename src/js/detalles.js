@@ -1,6 +1,6 @@
 const SUPABASE_URL = 'https://jscpecyyajfcqsmmovku.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzY3BlY3l5YWpmY3FzbW1vdmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2NDgxNjUsImV4cCI6MjA2NjIyNDE2NX0.iMK7-TRZmQCokoLUtz-eQwFzVFVOSzqP5TA_sfsQNzQ';
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 function renderizarDetalleProducto(producto) {
     // Elementos del DOM
@@ -9,7 +9,7 @@ function renderizarDetalleProducto(producto) {
     const precioEl = document.getElementById('detalle-precio');
     const imagenEl = document.getElementById('detalle-imagen');
     const imagenContainerEl = document.getElementById('detalle-imagen-container');
-    const botonComprar = document.querySelector('#detalle-producto-container button');
+    const botonComprar = document.getElementById('add-to-cart-btn');
     
     // Actualizar el contenido
     nombreEl.textContent = producto.nombre;
@@ -28,8 +28,11 @@ function renderizarDetalleProducto(producto) {
     imagenContainerEl.classList.remove('animate-pulse', 'bg-neutral-700');
 
     // Boton Añadir al Carrito
-    botonComprar.disabled = false;
     botonComprar.textContent = "Añadir al Carrito";
+    botonComprar.disabled = false;
+    botonComprar.onclick = function() {
+        agregarAlCarrito(producto.id);
+    };
     
     // Actualizar el titulo de la página
     document.title = `${producto.nombre} - BlackMarkpet`;

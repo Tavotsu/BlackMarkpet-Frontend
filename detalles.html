@@ -26,7 +26,7 @@
             </button>
         </div>
         <div id="mobileMenu" class="hidden md:hidden bg-neutral-800 p-4 space-y-4">
-            </div>
+        </div>
     </nav>
 
     <main class="flex-grow container mx-auto p-6">
@@ -40,7 +40,7 @@
                 <p id="detalle-descripcion" class="text-gray-300 mb-6 text-lg">Por favor, espere mientras cargamos los detalles.</p>
                 <div class="flex items-center justify-between mt-auto">
                     <span id="detalle-precio" class="text-5xl font-bold text-orange-500"></span>
-                    <button class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-colors disabled:bg-gray-500" disabled>
+                    <button id="add-to-cart-btn" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-colors disabled:bg-gray-500" disabled>
                         Añadir al Carrito
                     </button>
                 </div>
@@ -48,7 +48,7 @@
         </div>
     </main>
 
-    <footer class="mt-auto">
+    <footer class="mt-auto fixed bottom-0 w-full">
         <div class="bg-neutral-800 text-white py-6">
             <div class="max-w-7xl mx-auto px-4 text-center">
                 <p class="text-sm">© 2025 BlackMarkpet. Todos los derechos reservados.</p>
@@ -60,6 +60,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="src/js/detalles.js"></script> <script src="src/js/sesion.js"></script>
-    <script src="src/js/Responsive_menu.js" defer></script>
 </body>
 </html>
