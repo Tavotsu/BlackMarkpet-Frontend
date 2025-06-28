@@ -1,4 +1,4 @@
-// Función para obtener datos de los endpoints existentes
+// Función para obtener datos de los endpoints
 async function fetchData(url) {
     try {
         const response = await fetch(url);
@@ -15,19 +15,25 @@ function formatHour(hour) {
     return hour <= 12 ? `${hour}:00 AM` : `${hour - 12}:00 PM`;
 }
 
+// Función para formatear meses (1 → "Ene", 2 → "Feb", etc.)
+function formatMonth(month) {
+    const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+    return meses[month - 1] || month;
+}
+
 // Función para renderizar todos los gráficos
 async function renderCharts() {
-    // Obtener datos de los endpoints EXISTENTES en tu backend
+    // Obtener datos de los endpoints
     const ventas = await fetchData('/api/ventas-dia');
-    const inventario = await fetchData('/api/inventario-categorias');
+    const ganancias = await fetchData('/api/ganancias-mensuales');
     const top = await fetchData('/api/top-productos');
-    const stock = await fetchData('/api/stock-productos');
+    const stockCritico = await fetchData('/api/productos-stock-critico');
 
-    // 1. Gráfico de Ventas por Hora
+    // 1. Gráfico de Ventas por Hora (BARRA VERTICAL)
     new Chart(document.getElementById('ventasDia'), {
         type: 'bar',
         data: {
-            labels: ventas.labels.map(h => formatHour(h)),
+            labels: ventas.labels.map(formatHour),
             datasets: [{
                 label: 'Ventas por Hora',
                 data: ventas.data,
@@ -45,30 +51,32 @@ async function renderCharts() {
         }
     });
 
-    // 2. Gráfico de Inventario por Categoría
-    new Chart(document.getElementById('inventarioCategoria'), {
-        type: 'doughnut',
+    // 2. Gráfico de Ganancias Mensuales (LÍNEA)
+    new Chart(document.getElementById('gananciasMensuales'), {
+        type: 'line',
         data: {
-            labels: inventario.labels,
+            labels: ganancias.labels.map(formatMonth),
             datasets: [{
-                label: 'Productos por Categoría',
-                data: inventario.data,
-                backgroundColor: [
-                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', 
-                    '#9966FF', '#FF9F40', '#8AC926', '#1982C4'
-                ]
+                label: 'Ganancias ($)',
+                data: ganancias.data,
+                backgroundColor: 'rgba(156, 39, 176, 0.2)',
+                borderColor: '#9C27B0',
+                borderWidth: 2,
+                pointBackgroundColor: '#9C27B0',
+                pointRadius: 4,
+                fill: true
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-                legend: { position: 'right' }
+            scales: {
+                y: { beginAtZero: true }
             }
         }
     });
 
-    // 3. Gráfico de Top Productos
+    // 3. Gráfico de Top Productos (BARRAS HORIZONTAL)
     new Chart(document.getElementById('topProductos'), {
         type: 'bar',
         data: {
@@ -89,20 +97,15 @@ async function renderCharts() {
         }
     });
 
-    // 4. Gráfico de Stock de Productos
-    new Chart(document.getElementById('stockProductos'), {
-        type: 'line',
+    // 4. Gráfico de Stock Crítico (BARRAS VERTICAL)
+    new Chart(document.getElementById('stockCritico'), {
+        type: 'bar',
         data: {
-            labels: stock.labels,
+            labels: stockCritico.labels,
             datasets: [{
-                label: 'Stock Disponible',
-                data: stock.data,
-                backgroundColor: 'rgba(255, 152, 0, 0.2)',
-                borderColor: '#FF9800',
-                borderWidth: 2,
-                pointBackgroundColor: '#FF9800',
-                pointRadius: 4,
-                fill: true
+                label: 'Stock Actual',
+                data: stockCritico.data,
+                backgroundColor: '#FF9800'
             }]
         },
         options: {
@@ -115,15 +118,4 @@ async function renderCharts() {
     });
 }
 
-// cierre de sesion mmmmm :c
-
-
-
-// Inicialización cuando el DOM esté cargado
-document.addEventListener('DOMContentLoaded', () => {
-    // Renderizar gráficos
-    renderCharts();
-    
-    // Asignar evento al botón de cerrar sesión
-    document.getElementById('logoutBtn').addEventListener('click', cerrarSesion);
-});
+// Función para cerrar sesión
