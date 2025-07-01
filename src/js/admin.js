@@ -1,7 +1,9 @@
-// Función para obtener datos de los endpoints
-async function fetchData(url) {
+const urlBase = 'http://localhost:8080'; 
+
+async function fetchData(endpoint) {
     try {
-        const response = await fetch(url);
+        // Se construye la URL completa
+        const response = await fetch(`${urlBase}${endpoint}`); 
         if (!response.ok) throw new Error('Error en la respuesta del servidor');
         return await response.json();
     } catch (error) {
@@ -117,3 +119,4 @@ async function renderCharts() {
         }
     });
 }
+document.addEventListener('DOMContentLoaded', renderCharts);
