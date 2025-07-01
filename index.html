@@ -8,9 +8,7 @@
     <link rel="icon" href="assets/img/icon.png" type="image/png" sizes="32x32">
 </head>
 <body class="bg-neutral-900 p-0 m-0 ">
-    <!-- Navbar -->
-
-   <nav class="py-3 bg-neutral-900">
+    <nav class="py-3 bg-neutral-900">
         <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
             <div class="flex items-center space-x-2 right-full">
                 <a href="index.html">
@@ -32,7 +30,6 @@
         <div id="mobileMenu" class="hidden md:hidden bg-neutral-800 p-4 space-y-4"></div>
     </nav>
 
-    <!-- Hero -->
     <div class="bg-center bg-no-repeat bg-cover relative" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('assets/img/Dogs_Black_background_Spaniel_539102_3840x2160.jpg'); height: 50vh;">
         <div class="text-center text-white text-4xl absolute" style="top:50%; left: 50%; transform: translate(-50%, -50%);">
             <h1 class="font-bold">Bienvenido a BlackMarkpet</h1>
@@ -40,11 +37,10 @@
         </div>
     </div>
 
-    <!-- Contenido principal -->
     <main class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-stone-900 dark:text-white mb-8 text-center">Nuestros Productos</h2>
+        
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            
             <a href="detalles.html" class="group block bg-neutral-200 dark:bg-neutral-700 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
                 <div class="relative">
                     <img src="https://cdn.shopify.com/s/files/1/0102/3742/files/Ganador_936ee4de-362b-4b41-894f-0fbad4ba9e04.jpg?v=1611158640" alt="Comida Premium" class="w-full h-56 object-cover">
@@ -61,7 +57,7 @@
                 </div>
                 <div class="dark:bg-neutral-800 p-5">
                     <h3 class="text-xl font-bold text-stone-900 dark:text-white mb-2">Accesorios</h3>
-                    <p class="text-gray-600 dark:text-gray-300  text-sm">Todo lo que necesitas para el día a día.</p>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">Todo lo que necesitas para el día a día.</p>
                 </div>
             </a>
 
@@ -74,27 +70,30 @@
                     <p class="text-gray-600 dark:text-gray-300 text-sm">Mantén a tu mascota limpia y saludable.</p>
                 </div>
             </a>
+        </div>
 
-            <a href="detalles.html" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
-                <div class="relative">
-                    <img src="https://www.lospatiperrosconcepcion.cl/wp-content/uploads/2022/03/camas-tres-para-gatos-cafe-erde-naranja.png" alt="Camas" class="w-full h-56 object-cover">
-                </div>
-                <div class="dark:bg-neutral-800 p-5">
-                    <h3 class="text-xl font-bold text-stone-900 dark:text-white mb-2">Camas y Descanso</h3>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm">El confort que tu mascota merece.</p>
-                </div>
-            </a>
+        <div class="flex justify-center mt-8"> 
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 lg:max-w-[calc(2*theme('width.96')+theme('spacing.8'))]"> 
+                <a href="detalles.html" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="relative">
+                        <img src="https://www.lospatiperrosconcepcion.cl/wp-content/uploads/2022/03/camas-tres-para-gatos-cafe-erde-naranja.png" alt="Camas" class="w-full h-56 object-cover">
+                    </div>
+                    <div class="dark:bg-neutral-800 p-5">
+                        <h3 class="text-xl font-bold text-stone-900 dark:text-white mb-2">Camas y Descanso</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">El confort que tu mascota merece.</p>
+                    </div>
+                </a>
 
-            <a href="detalles.html" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 center">
-                <div class="relative">
-                    <img src="https://cdnx.jumpseller.com/crusec/image/50017730/resize/610/610?1719069285" alt="Juguetes" class="w-full h-56 object-cover">
-                </div>
-                <div class="dark:bg-neutral-800 p-5">
-                    <h3 class="text-xl font-bold text-stone-900 dark:text-white mb-2">Juguetes</h3>
-                    <p class="text-gray-600 dark:text-gray-300 text-sm">Diversión garantizada por horas.</p>
-                </div>
-            </a>
-
+                <a href="detalles.html" class="group block bg-neutral-200 dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="relative">
+                        <img src="https://cdnx.jumpseller.com/crusec/image/50017730/resize/610/610?1719069285" alt="Juguetes" class="w-full h-56 object-cover">
+                    </div>
+                    <div class="dark:bg-neutral-800 p-5">
+                        <h3 class="text-xl font-bold text-stone-900 dark:text-white mb-2">Juguetes</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">Diversión garantizada por horas.</p>
+                    </div>
+                </a>
+            </div>
         </div>
     </main>
 
@@ -104,7 +103,6 @@
             <p class="text-white font-bold mb-8">Descubre algo nuevo sobre nuestros amigos los gatos. ¡Presiona el botón para obtener otro dato!</p>
             
             <div class="bg-neutral-800 rounded-lg p-6 shadow-lg min-h-[120px] flex items-center justify-center mb-8">
-                <!-- Aqui se muestra el dato curioso -->
                 <blockquote class="justify-center text-white italic text-l md:text-2xl">
                     <p id="dato-gato">Cargando un dato curioso...</p>
                 </blockquote>
