@@ -1,37 +1,38 @@
-const urlBase = 'http://localhost:8080'; 
+const urlBase = 'http://localhost:8080'; // URL base para las peticiones API
 
+// Función para obtener datos de un endpoint específico
 async function fetchData(endpoint) {
     try {
-        // Se construye la URL completa
+        // Construye la URL completa y realiza la petición
         const response = await fetch(`${urlBase}${endpoint}`); 
         if (!response.ok) throw new Error('Error en la respuesta del servidor');
-        return await response.json();
+        return await response.json(); // Retorna datos en formato JSON
     } catch (error) {
         console.error('Error fetching data:', error);
-        return { labels: [], data: [] };
+        return { labels: [], data: [] }; // Retorna datos vacíos en caso de error
     }
 }
 
-// Función para formatear horas (8:00 AM, 9:00 AM, etc.)
+// Formatea una hora en formato AM/PM (ej. 8:00 AM)
 function formatHour(hour) {
     return hour <= 12 ? `${hour}:00 AM` : `${hour - 12}:00 PM`;
 }
 
-// Función para formatear meses (1 → "Ene", 2 → "Feb", etc.)
+// Convierte número de mes a su abreviatura en español (ej. 1 → Ene)
 function formatMonth(month) {
     const meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
     return meses[month - 1] || month;
 }
 
-// Función para renderizar todos los gráficos
+// Función principal que obtiene datos y renderiza todos los gráficos
 async function renderCharts() {
-    // Obtener datos de los endpoints
+    // Obtiene datos de diferentes endpoints
     const ventas = await fetchData('/api/ventas-dia');
     const ganancias = await fetchData('/api/ganancias-mensuales');
     const top = await fetchData('/api/top-productos');
     const stockCritico = await fetchData('/api/productos-stock-critico');
 
-    // 1. Gráfico de Ventas por Hora (BARRA VERTICAL)
+    // Gráfico 1: Ventas por hora (barras verticales)
     new Chart(document.getElementById('ventasDia'), {
         type: 'bar',
         data: {
@@ -47,13 +48,11 @@ async function renderCharts() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                y: { beginAtZero: true, ticks: { precision: 0 } }
-            }
+            scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
         }
     });
 
-    // 2. Gráfico de Ganancias Mensuales (LÍNEA)
+    // Gráfico 2: Ganancias mensuales (línea)
     new Chart(document.getElementById('gananciasMensuales'), {
         type: 'line',
         data: {
@@ -72,13 +71,11 @@ async function renderCharts() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                y: { beginAtZero: true }
-            }
+            scales: { y: { beginAtZero: true } }
         }
     });
 
-    // 3. Gráfico de Top Productos (BARRAS HORIZONTAL)
+    // Gráfico 3: Top productos (barras horizontales)
     new Chart(document.getElementById('topProductos'), {
         type: 'bar',
         data: {
@@ -92,14 +89,12 @@ async function renderCharts() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            indexAxis: 'y',
-            scales: {
-                x: { beginAtZero: true }
-            }
+            indexAxis: 'y', // Eje horizontal para barras
+            scales: { x: { beginAtZero: true } }
         }
     });
 
-    // 4. Gráfico de Stock Crítico (BARRAS VERTICAL)
+    // Gráfico 4: Stock crítico (barras verticales)
     new Chart(document.getElementById('stockCritico'), {
         type: 'bar',
         data: {
@@ -113,10 +108,10 @@ async function renderCharts() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                y: { beginAtZero: true }
-            }
+            scales: { y: { beginAtZero: true } }
         }
     });
 }
+
+// Ejecuta renderCharts cuando el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', renderCharts);
