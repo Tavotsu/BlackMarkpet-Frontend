@@ -1,28 +1,52 @@
-const SUPABASE_URL = 'https://jscpecyyajfcqsmmovku.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzY3BlY3l5YWpmY3FzbW1vdmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2NDgxNjUsImV4cCI6MjA2NjIyNDE2NX0.iMK7-TRZmQCokoLUtz-eQwFzVFVOSzqP5TA_sfsQNzQ';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
+// Espera a que la página cargue por completo
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('registro-form');
-    if (!form) return;
+    const registroForm = document.getElementById('registro-form');
+    if (!registroForm) return;
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = form.email.value;
-        const password = form.password.value;
+    // Escucha el evento de envío del formulario
+    registroForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Evita que la página se recargue
 
-        const { data, error } = await supabase.auth.signUp({
-            email,
-            password
-        });
+        const nombre = registroForm.nombre.value;
+        const email = registroForm.email.value;
+        const password = registroForm.password.value;
 
-        if (error) {
-            swal("Error", error.message, "error");
-        } else {
-            swal("¡Registro exitoso!", "Revisa tu correo para confirmar tu cuenta.", "success")
-                .then(() => {
-                    window.location.href = "login.html";
-                });
+        // URL del endpoint de registro en tu backend de Java
+        const url = 'http://localhost:8080/api/usuarios/registro';
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                // Enviamos los datos del nuevo usuario en el cuerpo de la solicitud
+                body: JSON.stringify({
+                    nombre: nombre,
+                    email: email,
+                    password: password
+                })
+            });
+
+            // Si el usuario se crea correctamente (código 201 Created)
+            if (response.status === 201) {
+                swal("¡Éxito!", "Tu cuenta ha sido creada. Ahora puedes iniciar sesión.", "success")
+                    .then(() => {
+                        // Redirigimos al usuario a la página de login
+                        window.location.href = 'login.html';
+                    });
+            } else if (response.status === 409) {
+                // Si el correo ya existe (código 409 Conflict)
+                swal("Error", "Este correo electrónico ya está registrado.", "error");
+            } else {
+                // Para cualquier otro error del servidor
+                swal("Error", "No se pudo completar el registro. Inténtalo de nuevo.", "error");
+            }
+
+        } catch (error) {
+            // Si hay un problema para conectarse con el backend
+            console.error('Error de conexión:', error);
+            swal("Error de Conexión", "No se pudo conectar con el servidor. Revisa si tu backend está funcionando.", "error");
         }
     });
 });

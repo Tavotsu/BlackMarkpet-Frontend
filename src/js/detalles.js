@@ -1,64 +1,92 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Llamar a la API para obtener TODOS los productos
     fetchAllProductos();
 });
 
-// Función para obtener todos los productos desde el backend
+// Pide todos los productos al backend
 const fetchAllProductos = async () => {
+    const container = document.querySelector('#producto-detalles');
+    if (!container) return;
+
     try {
-        // 2. URL para obtener la lista completa de productos
-        const url = `http://localhost:8080/api/productos`;
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            throw new Error(`Error al obtener los productos. Estado: ${response.status}`);
-        }
-
-        // La respuesta ahora es un array de productos
-        const productos = await response.json(); 
-        
-        // 3. Mostrar todos los productos en la página
+        const response = await fetch('http://localhost:8080/api/productos');
+        const productos = await response.json();
         mostrarTodosLosProductos(productos);
-
     } catch (error) {
-        console.error(error);
-        const container = document.querySelector('#producto-detalles');
-        container.innerHTML = '<p>Error al cargar los productos. Por favor, intenta de nuevo más tarde.</p>';
+        console.error("Error al obtener productos:", error);
+        container.innerHTML = '<p class="text-center text-red-500 col-span-full">No se pudieron cargar los productos.</p>';
     }
 };
 
-// Función para renderizar todos los productos en el HTML
+// Pinta las tarjetas de cada producto en el HTML
 const mostrarTodosLosProductos = (productos) => {
     const container = document.querySelector('#producto-detalles');
-
-    // Limpiar el contenido anterior (el mensaje de "cargando...")
     container.innerHTML = '';
 
-    if (productos.length === 0) {
-        container.innerHTML = '<p>No hay productos para mostrar.</p>';
+    if (!productos || productos.length === 0) {
+        container.innerHTML = '<p class="text-center text-gray-600">No hay productos disponibles.</p>';
         return;
     }
 
-    // 4. Crear una tarjeta para cada producto usando un bucle
     productos.forEach(producto => {
         const card = document.createElement('div');
-        // Agregamos un margen inferior para separar las tarjetas
-        card.className = 'bg-white rounded-lg shadow-md p-6 mb-6'; 
-
+        card.className = 'bg-neutral-800 text-white rounded-lg shadow-lg overflow-hidden flex flex-col';
         card.innerHTML = `
-            <img src="${producto.imageUrl}" alt="Imagen de ${producto.nombre}" class="w-full h-64 object-cover rounded-md mb-4" style="background-position: top;">
-            <h2 class="text-3xl font-bold mb-2">${producto.nombre}</h2>
-            <p class="text-gray-700 mb-4">${producto.descripcion}</p>
-            <p class="text-2xl font-semibold text-gray-900 mb-4">$${producto.precio.toLocaleString('es-CL')}</p>
-            <div class="flex items-center mb-4">
-                <span class="text-gray-600 mr-2">Stock disponible:</span>
-                <span class="text-gray-800 font-bold">${producto.stock}</span>
+            <img src="${producto.imageUrl}" alt="${producto.nombre}" class="w-full h-56 object-cover">
+            <div class="p-6 flex-grow flex flex-col">
+                <h2 class="text-2xl font-bold mb-2">${producto.nombre}</h2>
+                <p class="text-gray-400 mb-4 flex-grow">${producto.descripcion}</p>
+                <div class="mt-auto">
+                    <p class="text-3xl font-semibold mb-4">${formatCLP(producto.precio)}</p>
+                    <div class="flex items-center text-gray-400 mb-4">
+                        <span class="font-medium mr-2">Stock:</span>
+                        <span class="font-bold">${producto.stock}</span>
+                    </div>
+                    <button class="w-full bg-orange-600 hover:bg-orange-700 font-bold py-2 px-4 rounded-lg transition-colors agregar-carrito-btn">
+                        Agregar al Carrito
+                    </button>
+                </div>
             </div>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
-                Agregar al Carrito
-            </button>
         `;
 
+        // Logica botón de "Agregar al Carrito"
+        card.querySelector('.agregar-carrito-btn').addEventListener('click', () => {
+            agregarProductoAlCarritoAPI(producto.id);
+        });
+        
         container.appendChild(card);
     });
 };
+
+// Llama a la API para meter un producto al carrito del usuario
+async function agregarProductoAlCarritoAPI(productoId) {
+    const usuario = JSON.parse(localStorage.getItem('usuarioLogueado'));
+
+    // Si nadie ha iniciado sesión, pide que lo hagan
+    if (!usuario) {
+        swal("¡Atención!", "Debes iniciar sesión para agregar productos.", "warning", {
+            buttons: { cancel: "Más tarde", login: { text: "Iniciar Sesión", value: "login" } },
+        }).then((value) => {
+            if (value === "login") window.location.href = 'login.html';
+        });
+        return;
+    }
+
+    // Si hay sesión, manda el producto al backend
+    try {
+        await fetch('http://localhost:8080/api/carrito/agregar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ usuarioId: usuario.id, productoId: productoId, cantidad: 1 })
+        });
+
+        swal("¡Añadido!", "Producto añadido al carrito.", "success", { buttons: false, timer: 1200 });
+        
+        // Actualiza y muestra el carrito para que se vea el nuevo producto
+        await renderizarCarrito();
+        toggleCarrito(true);
+
+    } catch (error) {
+        console.error("Error al añadir al carrito:", error);
+        swal("Error", "No se pudo añadir el producto.", "error");
+    }
+}

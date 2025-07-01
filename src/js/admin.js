@@ -117,5 +117,3 @@ async function renderCharts() {
         }
     });
 }
-
-// Función para cerrar sesión

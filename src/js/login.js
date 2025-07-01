@@ -1,29 +1,55 @@
-const SUPABASE_URL = 'https://jscpecyyajfcqsmmovku.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzY3BlY3l5YWpmY3FzbW1vdmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2NDgxNjUsImV4cCI6MjA2NjIyNDE2NX0.iMK7-TRZmQCokoLUtz-eQwFzVFVOSzqP5TA_sfsQNzQ';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-// Espera a que el DOM esté listo
+// Espera a que la página cargue completamente
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('login-form');
-    if (!form) return;
+    const loginForm = document.getElementById('login-form');
+    if (!loginForm) return;
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = form.email.value;
-        const password = form.password.value;
+    // Escucha el evento de envío del formulario
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Evita que la página se recargue
 
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email,
-            password
-        });
+        const email = loginForm.email.value;
+        const password = loginForm.password.value;
 
-        if (error) {
-            swal("Error", error.message, "error");
-        } else {
-            swal("¡Bienvenido!", "Has iniciado sesión correctamente.", "success")
-                .then(() => {
-                    window.location.href = "index.html";
-                });
+        // La URL de tu propio backend para iniciar sesión
+        const url = 'http://localhost:8080/api/usuarios/login';
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                // Envia el correo y la contraseña en el cuerpo de la solicitud
+                body: JSON.stringify({ email: email, password: password })
+            });
+
+            // Si la respuesta es exitosa
+            if (response.ok) {
+                const usuario = await response.json();
+
+                // Guardamos los datos del usuario en localStorage para usarlo en otras partes
+                localStorage.setItem('usuarioLogueado', JSON.stringify(usuario));
+
+                swal("¡Bienvenido!", "Has iniciado sesión correctamente.", "success")
+                    .then(() => {
+                        // Comprueba si el email del usuario es el del administrador.
+                        if (usuario.email === 'admin@correo.com') {
+                            // Si es admin, lo manda a admin.html
+                            window.location.href = 'admin.html';
+                        } else {
+                            // Si es cualquier otro usuario, lo mandamos a index.html
+                            window.location.href = 'index.html';
+                        }
+                    });
+            } else {
+                // Si las credenciales son incorrectas o hay otro error
+                swal("Error", "El correo o la contraseña son incorrectos.", "error");
+            }
+
+        } catch (error) {
+            // Si hay un problema para conectarse con el backend
+            console.error('Error de conexión:', error);
+            swal("Error de Conexión", "No se pudo conectar con el servidor.", "error");
         }
     });
 });
