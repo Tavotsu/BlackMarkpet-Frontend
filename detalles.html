@@ -71,5 +71,36 @@
     <script src="src/js/sesion.js"></script>
     <script src="src/js/carrito.js"></script>
     <script src="src/js/detalles.js"></script>
+
+    <!-- MENU MOVIL-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const navLinks = document.getElementById('nav-links');
+
+            // Clonar los enlaces del menú de escritorio al menú móvil
+            // Esto asume que #nav-links contendrá los elementos que quieres en el menú móvil
+            if (mobileMenu && navLinks) {
+                mobileMenu.innerHTML = navLinks.innerHTML;
+
+                // Añadir estilos para los enlaces dentro del menú móvil para que se vean bien
+                Array.from(mobileMenu.children).forEach(child => {
+                    // Ajusta esta condición si tus enlaces son de otro tipo de etiqueta (e.g., div con anclas dentro)
+                    if (child.tagName === 'A') {
+                        child.classList.add('block', 'text-white', 'hover:text-orange-standard', 'py-2');
+                    }
+                });
+            }
+
+            // Añadir el event listener para mostrar/ocultar el menú móvil
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden'); // Esta línea es la que hace el trabajo
+                });
+            }
+        });
+    </script>
 </body>
 </html>
