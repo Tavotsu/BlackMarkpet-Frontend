@@ -1,74 +1,64 @@
-const SUPABASE_URL = 'https://jscpecyyajfcqsmmovku.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzY3BlY3l5YWpmY3FzbW1vdmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2NDgxNjUsImV4cCI6MjA2NjIyNDE2NX0.iMK7-TRZmQCokoLUtz-eQwFzVFVOSzqP5TA_sfsQNzQ';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-function renderizarDetalleProducto(producto) {
-    // Elementos del DOM
-    const nombreEl = document.getElementById('detalle-nombre');
-    const descripcionEl = document.getElementById('detalle-descripcion');
-    const precioEl = document.getElementById('detalle-precio');
-    const imagenEl = document.getElementById('detalle-imagen');
-    const imagenContainerEl = document.getElementById('detalle-imagen-container');
-    const botonComprar = document.getElementById('add-to-cart-btn');
-    
-    // Actualizar el contenido
-    nombreEl.textContent = producto.nombre;
-    descripcionEl.textContent = producto.descripcion;
-    
-    // Dar formato al precio
-    precioEl.textContent = new Intl.NumberFormat('es-CL', {
-        style: 'currency',
-        currency: 'CLP'
-    }).format(producto.precio);
-
-    // Actualizar imagen y quitar efecto de carga
-    imagenEl.src = producto.imagen || 'assets/img/placeholder.png';
-    imagenEl.alt = `Imagen de ${producto.nombre}`;
-    imagenEl.classList.remove('hidden');
-    imagenContainerEl.classList.remove('animate-pulse', 'bg-neutral-700');
-
-    // Boton Añadir al Carrito
-    botonComprar.textContent = "Añadir al Carrito";
-    botonComprar.disabled = false;
-    botonComprar.onclick = function() {
-        agregarAlCarrito(producto.id);
-    };
-    
-    // Actualizar el titulo de la página
-    document.title = `${producto.nombre} - BlackMarkpet`;
-}
-
-document.addEventListener('DOMContentLoaded', async () => {
-    // Obtener el ID del producto de la URL
-    const params = new URLSearchParams(window.location.search);
-    const productoId = params.get('id');
-
-    if (!productoId) {
-        // Si no hay ID, mostrar error
-        swal("Error", "No se ha especificado un producto.", "error")
-            .then(() => {
-                window.location.href = 'index.html';
-            });
-        return;
-    }
-
-    // Buscar el producto por ID    
-    // se usa .single() para asegurarnos que devuelva un solo objeto y no un array
-    const { data: producto, error } = await supabase
-        .from('productos')
-        .select('*')
-        .eq('id', productoId)
-        .single();
-
-    if (error || !producto) {
-        console.error('Error al cargar el producto:', error);
-        swal("Producto no encontrado", "El producto que buscas no existe o fue eliminado.", "error")
-            .then(() => {
-                window.location.href = 'index.html';
-            });
-        return;
-    }
-
-    // Si todo sale bien, llamar a la función para mostrar los datos
-    renderizarDetalleProducto(producto);
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Llamar a la API para obtener TODOS los productos
+    fetchAllProductos();
 });
+
+// Función para obtener todos los productos desde el backend
+const fetchAllProductos = async () => {
+    try {
+        // 2. URL para obtener la lista completa de productos
+        const url = `http://localhost:8080/api/productos`;
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Error al obtener los productos. Estado: ${response.status}`);
+        }
+
+        // La respuesta ahora es un array de productos
+        const productos = await response.json(); 
+        
+        // 3. Mostrar todos los productos en la página
+        mostrarTodosLosProductos(productos);
+
+    } catch (error) {
+        console.error(error);
+        const container = document.querySelector('#producto-detalles');
+        container.innerHTML = '<p>Error al cargar los productos. Por favor, intenta de nuevo más tarde.</p>';
+    }
+};
+
+// Función para renderizar todos los productos en el HTML
+const mostrarTodosLosProductos = (productos) => {
+    const container = document.querySelector('#producto-detalles');
+
+    // Limpiar el contenido anterior (el mensaje de "cargando...")
+    container.innerHTML = '';
+
+    if (productos.length === 0) {
+        container.innerHTML = '<p>No hay productos para mostrar.</p>';
+        return;
+    }
+
+    // 4. Crear una tarjeta para cada producto usando un bucle
+    productos.forEach(producto => {
+        const card = document.createElement('div');
+        // Agregamos un margen inferior para separar las tarjetas
+        card.className = 'bg-white rounded-lg shadow-md p-6 mb-6'; 
+
+        card.innerHTML = `
+            <img src="${producto.imageUrl}" alt="Imagen de ${producto.nombre}" class="w-full h-64 object-cover rounded-md mb-4" style="background-position: top;">
+            <h2 class="text-3xl font-bold mb-2">${producto.nombre}</h2>
+            <p class="text-gray-700 mb-4">${producto.descripcion}</p>
+            <p class="text-2xl font-semibold text-gray-900 mb-4">$${producto.precio.toLocaleString('es-CL')}</p>
+            <div class="flex items-center mb-4">
+                <span class="text-gray-600 mr-2">Stock disponible:</span>
+                <span class="text-gray-800 font-bold">${producto.stock}</span>
+            </div>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                Agregar al Carrito
+            </button>
+        `;
+
+        container.appendChild(card);
+    });
+};

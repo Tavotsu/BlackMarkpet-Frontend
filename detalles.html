@@ -29,26 +29,16 @@
         </div>
     </nav>
 
-    <main class="flex-grow container mx-auto p-6">
-        <div id="detalle-producto-container" class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-neutral-800 p-8 rounded-lg shadow-xl">
-            <div id="detalle-imagen-container" class="flex justify-center items-center animate-pulse bg-neutral-700 rounded-lg min-h-[300px]">
-                <img id="detalle-imagen" src="assets/img/placeholder.png" alt="Cargando imagen del producto..." class="w-full max-w-sm h-auto object-cover rounded-lg hidden">
-            </div>
-            
-            <div class="flex flex-col justify-center text-white">
-                <h1 id="detalle-nombre" class="text-4xl font-extrabold text-white mb-4">Cargando producto...</h1>
-                <p id="detalle-descripcion" class="text-gray-300 mb-6 text-lg">Por favor, espere mientras cargamos los detalles.</p>
-                <div class="flex items-center justify-between mt-auto">
-                    <span id="detalle-precio" class="text-5xl font-bold text-orange-500"></span>
-                    <button id="add-to-cart-btn" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-colors disabled:bg-gray-500" disabled>
-                        Añadir al Carrito
-                    </button>
-                </div>
-            </div>
+    <main class="flex-grow container mx-auto p-6 mb-12">
+        <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Nuestros Productos</h1>
+
+        <div id="producto-detalles" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <p class="text-center text-gray-500 col-span-full">Cargando productos...</p>
         </div>
+
     </main>
 
-    <footer class="mt-auto fixed bottom-0 w-full">
+    <footer>
         <div class="bg-neutral-800 text-white py-6">
             <div class="max-w-7xl mx-auto px-4 text-center">
                 <p class="text-sm">© 2025 BlackMarkpet. Todos los derechos reservados.</p>
@@ -56,9 +46,9 @@
             </div>
         </div>
     </footer>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="src/js/detalles.js"></script> <script src="src/js/sesion.js"></script>
+
+    <script src="src/js/catalogo.js"></script>
+    <script src="src/js/detalles.js"></script>
+    <script src="src/js/sesion.js"></script>
 </body>
 </html>

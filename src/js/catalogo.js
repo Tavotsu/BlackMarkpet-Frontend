@@ -1,18 +1,15 @@
-const SUPABASE_URL = 'https://jscpecyyajfcqsmmovku.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzY3BlY3l5YWpmY3FzbW1vdmt1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2NDgxNjUsImV4cCI6MjA2NjIyNDE2NX0.iMK7-TRZmQCokoLUtz-eQwFzVFVOSzqP5TA_sfsQNzQ';
-
-// 2. Crea el cliente de Supabase
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
 document.addEventListener('DOMContentLoaded', () => {
     const catalogoContainer = document.getElementById('catalogo-productos');
 
-    // Función para renderizar los productos en el HTML
+    // La URL de tu API de Spring Boot donde se obtienen los productos
+    const API_URL = 'http://localhost:8080/api/productos';
+
+    // Función para renderizar los productos
     function renderizarProductos(productos) {
-        catalogoContainer.innerHTML = ''; // Limpia el contenedor de productos
+        catalogoContainer.innerHTML = ''; // Limpia el div
 
         if (!productos || productos.length === 0) {
-            catalogoContainer.innerHTML = '<p class="text-white col-span-full text-center text-xl">No se encontraron productos en la base de datos.</p>';
+            catalogoContainer.innerHTML = '<p class="text-white col-span-full text-center text-xl">No se encontraron productos.</p>';
             return;
         }
 
@@ -42,23 +39,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Función para obtener los productos desde Supabase
+    // Función para obtener los productos desde TU BACKEND de Spring Boot
     async function cargarProductos() {
-        // Muestra un indicador de carga
         catalogoContainer.innerHTML = '<p class="text-white col-span-full text-center text-2xl animate-pulse">Cargando productos...</p>';
 
-        const { data, error } = await supabase
-            .from('productos') 
-            .select('*');
+        try {
+            const response = await fetch(API_URL);
+            
+            if (!response.ok) {
+                // Si la respuesta no es 200 OK, lanza un error
+                throw new Error(`Error del servidor: ${response.status}`);
+            }
 
-        if (error) {
+            const productos = await response.json();
+            
+            // Llama a la función para pintar los productos en la página
+            renderizarProductos(productos);
+
+        } catch (error) {
             console.error('Error al cargar productos:', error);
-            catalogoContainer.innerHTML = `<p class="text-red-500 col-span-full text-center">Error al cargar productos. Revisa la consola para más detalles.</p>`;
-            return;
+            // Muestra un mensaje de error más útil para el usuario
+            catalogoContainer.innerHTML = `<p class="text-red-500 col-span-full text-center">No se pudo conectar con el servidor para cargar los productos. ¿Está el backend funcionando?</p>`;
         }
-
-        // Llama a la función para pintar los productos en la página
-        renderizarProductos(data);
     }
 
     // Llama a la función principal al cargar la página
