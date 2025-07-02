@@ -1,4 +1,4 @@
-const urlBase = 'http://localhost:8080'; 
+const urlBase = 'https://blackmarkpet-backend-production.up.railway.app'; 
 
 async function fetchData(endpoint) {
     try {
