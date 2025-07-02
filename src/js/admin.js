@@ -1,4 +1,4 @@
-const urlBase = 'http://localhost:8080'; // URL base para las peticiones API
+const urlBase = 'https://blackmarkpet-backend-production.up.railway.app'; 
 
 // Función para obtener datos de un endpoint específico
 async function fetchData(endpoint) {

@@ -35,7 +35,7 @@ async function renderizarCarrito() {
     }
 
     try {
-        const response = await fetch(`http://localhost:8080/api/carrito/${usuario.id}`); // Petición para obtener productos del carrito
+        const response = await fetch(`https://blackmarkpet-backend-production.up.railway.app/api/carrito/${usuario.id}`);
         const items = await response.json();
 
         carritoItemsContainer.innerHTML = ''; // Limpia productos previos
@@ -99,8 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const itemId = botonEliminar.dataset.itemId;
             const usuario = JSON.parse(localStorage.getItem('usuarioLogueado'));
             if (usuario) {
-                await fetch(`http://localhost:8080/api/carrito/eliminar/${itemId}?usuarioId=${usuario.id}`, { method: 'DELETE' });
-                await renderizarCarrito(); // Actualiza el carrito tras eliminar
+                await fetch(`https://blackmarkpet-backend-production.up.railway.app/api/carrito/eliminar/${itemId}?usuarioId=${usuario.id}`, { method: 'DELETE' });
+                await renderizarCarrito(); // Vuelve a dibujar el carrito para que se vea el cambio
             }
         }
     });

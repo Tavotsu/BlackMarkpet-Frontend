@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const catalogoContainer = document.getElementById('catalogo-productos');
 
     // La URL de tu API de Spring Boot donde se obtienen los productos
-    const API_URL = 'http://localhost:8080/api/productos';
+    const API_URL = 'https://blackmarkpet-backend-production.up.railway.app/api/productos';
 
     // Función para renderizar los productos
     function renderizarProductos(productos) {

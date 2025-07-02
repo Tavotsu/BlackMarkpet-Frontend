@@ -8,9 +8,9 @@ const fetchAllProductos = async () => {
     if (!container) return; // Si no existe el contenedor, termina la función
 
     try {
-        const response = await fetch('http://localhost:8080/api/productos'); // Petición para obtener productos
-        const productos = await response.json(); // Convierte respuesta a JSON
-        mostrarTodosLosProductos(productos); // Muestra los productos en el HTML
+        const response = await fetch('https://blackmarkpet-backend-production.up.railway.app/api/productos');
+        const productos = await response.json();
+        mostrarTodosLosProductos(productos);
     } catch (error) {
         console.error("Error al obtener productos:", error);
         // Mensaje de error visible para el usuario
@@ -74,7 +74,7 @@ async function agregarProductoAlCarritoAPI(productoId) {
 
     // Si hay sesión activa, envía el producto al carrito en el backend
     try {
-        await fetch('http://localhost:8080/api/carrito/agregar', {
+        await fetch('https://blackmarkpet-backend-production.up.railway.app/api/carrito/agregar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuarioId: usuario.id, productoId: productoId, cantidad: 1 })
