@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = registroForm.password.value;
 
         // URL del endpoint de registro en tu backend de Java
-        const url = 'http://localhost:8080/api/usuarios/registro';
+        const url = 'https://blackmarkpet-backend-production.up.railway.app/api/usuarios/registro';
 
         try {
             const response = await fetch(url, {

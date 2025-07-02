@@ -8,7 +8,7 @@ const fetchAllProductos = async () => {
     if (!container) return;
 
     try {
-        const response = await fetch('http://localhost:8080/api/productos');
+        const response = await fetch('https://blackmarkpet-backend-production.up.railway.app/api/productos');
         const productos = await response.json();
         mostrarTodosLosProductos(productos);
     } catch (error) {
@@ -73,7 +73,7 @@ async function agregarProductoAlCarritoAPI(productoId) {
 
     // Si hay sesión, manda el producto al backend
     try {
-        await fetch('http://localhost:8080/api/carrito/agregar', {
+        await fetch('https://blackmarkpet-backend-production.up.railway.app/api/carrito/agregar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuarioId: usuario.id, productoId: productoId, cantidad: 1 })
